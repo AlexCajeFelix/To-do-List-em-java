@@ -1,9 +1,15 @@
+import java.sql.Connection;
 import java.util.Scanner;
+
+import Coneccao.Coneccao;
 
 public class App {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         int opcao;
+
+        Connection conn =   Coneccao.getConnection();
+        System.out.println(conn);
 
         // Saudação de boas-vindas
         System.out.println("===========================================");
@@ -34,6 +40,7 @@ public class App {
             switch (opcao) {
                 case 1:
                     System.out.println("\nCriando uma nova lista de tarefas...");
+                    
                   
                     break;
                 case 2:
@@ -85,5 +92,11 @@ public class App {
                     break;
             }
         }
+    
+
+    
+    
+    
     }
+
 }

@@ -40,6 +40,7 @@ Este é um projeto de To-Do List desenvolvido em Java, utilizando JDBC para inte
 
 ## Estrutura do Banco de Dados
 
+
 Exemplo de estrutura para a tabela de tarefas:
 
 ```sql
@@ -55,3 +56,5 @@ CREATE TABLE listas (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL
 );
+
+
