@@ -10,7 +10,22 @@ import Coneccao.Coneccao;
 
 public class Delete {
 
-    public static void main(String[] args) throws FileNotFoundException, IOException { // Adicionando um método para executar o código
+    private Integer teste;
+    
+   
+
+    public Delete(Integer teste) {
+        this.teste = teste;
+    }
+
+
+
+    public Delete() {
+        
+    }
+
+
+    public  void Delete() throws FileNotFoundException, IOException { 
         Connection conn = null;
         PreparedStatement pst = null;
 
@@ -18,7 +33,7 @@ public class Delete {
             conn = Coneccao.getConnection();
             pst = conn.prepareStatement("DELETE FROM lista_tarefa WHERE list_id = ?");
 
-            pst.setInt(1, 4007); // ID do registro a ser deletado
+            pst.setInt(1, teste); 
 
             int linhasAfetadas = pst.executeUpdate();
             if (linhasAfetadas > 0) {

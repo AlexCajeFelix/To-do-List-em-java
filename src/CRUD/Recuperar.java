@@ -12,7 +12,7 @@ import Coneccao.Dbexeption;
 
 public class Recuperar {
 
-    public static void main(String[] args) { // Adicionando um método para rodar o código
+    public static void Recuperar() { 
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;

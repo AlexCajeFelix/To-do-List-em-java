@@ -10,15 +10,31 @@ import Coneccao.Coneccao;
 
 public class Edit {
 
-    public static void Ed() throws FileNotFoundException, IOException { // Método para executar o código
+    private String teste;
+    
+   
+
+    public Edit(String teste) {
+        this.teste = teste;
+    }
+
+
+
+    public Edit() {
+        
+    }
+
+
+
+    public void Edit() throws FileNotFoundException, IOException { // Método para executar o código
         Connection conn = null;
         PreparedStatement pst = null; 
         
         try {
             conn = Coneccao.getConnection();
             pst = conn.prepareStatement("UPDATE lista_tarefa SET name = ? WHERE list_id = ?");
-            pst.setString(1, "VALERIA");
-            pst.setInt(2, 4008);
+            pst.setString(1, teste);
+            pst.setInt(2, 4013);
 
             int linhasAfetadas = pst.executeUpdate();
 
@@ -38,5 +54,17 @@ public class Edit {
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
         }
+    }
+
+
+
+    public String getTeste() {
+        return teste;
+    }
+
+
+
+    public void setTeste(String teste) {
+        this.teste = teste;
     }
 }

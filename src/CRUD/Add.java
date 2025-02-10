@@ -14,23 +14,34 @@ import Coneccao.Coneccao;
 
 public class Add {
 
-    public static void main(String[] args) throws FileNotFoundException, IOException { // Método necessário para executar o código
+    private String teste;
+
+  
+    public Add(String teste) {
+        this.teste = teste;
+    }
+
+    // Método para adicionar uma tarefa no banco de dados
+    public void addTask() throws FileNotFoundException, IOException {
         Connection coon2 = null;
         PreparedStatement pst = null;
 
         try {
+            // Obtendo a conexão
             coon2 = Coneccao.getConnection();
             pst = coon2.prepareStatement(
-                "INSERT INTO lista_tarefa (name, description, date_start) VALUES (?, ?, ?)", 
+                "INSERT INTO lista_tarefa (name, description, date_start) VALUES (?, ?, ?)",
                 Statement.RETURN_GENERATED_KEYS
             );
 
-            pst.setString(1, "ALEX");
+            // Passando os valores para o SQL
+            pst.setString(1, teste);
             pst.setString(2, "Alex Bonitão lindão");
-            pst.setDate(3, Date.valueOf(LocalDate.now())); // Data atual
+            pst.setDate(3, Date.valueOf(LocalDate.now()));
 
             int rows = pst.executeUpdate();
 
+            // Verificando se a inserção foi bem-sucedida
             if (rows > 0) {
                 ResultSet rs = pst.getGeneratedKeys();
                 while (rs.next()) {
@@ -40,8 +51,10 @@ public class Add {
             } else {
                 System.out.println("Nada foi alterado");
             }
+
         } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage()); // Melhor exibir a mensagem do erro
+            System.out.println("ERRO: " + e.getMessage());
+            
         } finally {
             // Fechando os recursos
             try {
@@ -51,5 +64,16 @@ public class Add {
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
         }
+
+        
+    }
+
+    // Getter e Setter para o campo 'teste'
+    public String getTeste() {
+        return teste;
+    }
+
+    public void setTeste(String teste) {
+        this.teste = teste;
     }
 }
