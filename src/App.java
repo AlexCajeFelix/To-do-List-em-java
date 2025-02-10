@@ -1,15 +1,24 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.channels.Pipe.SourceChannel;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import CRUD.Add;
 import CRUD.Delete;
 import CRUD.Edit;
+import CRUD.Recuperar;
+import Coneccao.Coneccao;
+import Exeptions.ExeptionsMain;
 
 public class App {
     public static void main(String[] args) throws FileNotFoundException, IOException  {
         Scanner sc = new Scanner(System.in);
         int opcao;
+       
         
         // Saudação de boas-vindas
         System.out.println("===========================================");
@@ -18,6 +27,7 @@ public class App {
         System.out.println("===========================================");
 
         while (true) {
+           
             System.out.println("\nEscolha uma opção:");
             System.out.println("(1) Criar uma nova lista de tarefas");
             System.out.println("(2) Criar tarefas para a sua lista");
@@ -34,109 +44,97 @@ public class App {
 
             System.out.print("\nEscolha uma opção: ");
             opcao = sc.nextInt();
-            sc.nextLine();  // Consome o buffer de quebra de linha após a entrada do número
+            sc.nextLine();  
             
             switch (opcao) {
                 case 1:
+                  try {
+                    Add add = new Add();
                     System.out.println("\nCriando uma nova lista de tarefas...");
                     System.out.print("Digite o nome da lista: ");
                     String name = sc.nextLine();
                     System.out.print("Digite a descrição da lista: ");
                     String description = sc.nextLine();
                     System.out.println("Lista criada com sucesso!");
-                    Add add = new Add();
-                    add.addTask(name,description);
+                    add.addLista(name,description);
+                    
+                  } catch (InputMismatchException | IOException e) {
+                    throw new ExeptionsMain("Erro InputMismatchException: ID INVALIDO");
+                  }
                     break;
                 case 2:
-                    System.out.println("\nCriando tarefas para a sua lista...");
-                    System.out.print("Digite o nome da tarefa: ");
-                    String taskName = sc.nextLine();
-                    System.out.print("Digite a descrição da tarefa: ");
-                    String taskDescription = sc.nextLine();
-                    System.out.print("Digite a data de início (yyyy-mm-dd): ");
-                    String taskDate = sc.nextLine();
-                    System.out.println("Tarefa criada com sucesso!");
-                    // Chamar o método para adicionar a tarefa no banco.
+                    try {
+                        Add add = new Add();
+                        System.out.println("\nCriando tarefas para a sua lista...");
+                        System.out.print("Digite o nome da tarefa: ");
+                        String taskName = sc.nextLine();
+                        System.out.print("Digite a descrição da tarefa: ");
+                        String taskDescription = sc.nextLine();
+                        System.out.print("o id): ");
+                        int listId = sc.nextInt();
+                        add.addTarefa(taskName,taskDescription,listId);
+                    } 
+                    catch(InputMismatchException | IOException e) {
+                        throw new ExeptionsMain("Erro InputMismatchException: ID INVALIDO");
+                      }
+
                     break;
                 case 3:
-                    System.out.println("\nEditando uma lista existente...");
-                    System.out.print("Digite o ID da lista que deseja editar: ");
-                    int listIdToEdit = sc.nextInt();
-                    sc.nextLine(); // Consome o buffer
-                    System.out.print("Digite o novo nome da lista: ");
-                    String newName = sc.nextLine();
-                    System.out.print("Digite a nova descrição da lista: ");
-                    String newDescription = sc.nextLine();
-                    System.out.println("Lista editada com sucesso!");
-                    // Chamar o método Edit para editar a lista no banco.
+                     
+
                     break;
                 case 4:
-                    System.out.println("\nEditando uma tarefa em uma lista...");
-                    System.out.print("Digite o ID da tarefa que deseja editar: ");
-                    int taskIdToEdit = sc.nextInt();
-                    sc.nextLine(); // Consome o buffer
-                    System.out.print("Digite o novo nome da tarefa: ");
-                    String newTaskName = sc.nextLine();
-                    System.out.print("Digite a nova descrição da tarefa: ");
-                    String newTaskDescription = sc.nextLine();
-                    System.out.print("Digite a nova data de início (yyyy-mm-dd): ");
-                    String newTaskDate = sc.nextLine();
-                    System.out.println("Tarefa editada com sucesso!");
-                    // Chamar o método Edit para editar a tarefa no banco.
+                   
+                    
                     break;
                 case 5:
                     System.out.println("\nVisualizando suas listas...");
-                    // Aqui você pode chamar o método que lista todas as listas no banco.
+                    Recuperar recuperar = new Recuperar();
+                    recuperar.Recuperar();
+                    
+                    
                     break;
                 case 6:
-                    System.out.println("\nVisualizando tarefa por ID...");
-                    System.out.print("Digite o ID da tarefa: ");
-                    int taskIdToView = sc.nextInt();
-                    sc.nextLine(); // Consome o buffer
-                    System.out.println("Tarefa exibida com sucesso!");
-                    // Chamar o método para exibir a tarefa pelo ID.
+                System.out.println("\nVisualizando suas listas...");
+                System.out.println("Digite o id da lista que deseja visualizar");
+                int listId2 = sc.nextInt();
+                Recuperar recuperar2 = new Recuperar();
+                recuperar2.RecuperarPorId(listId2);
                     break;
                 case 7:
-                    System.out.println("\nVisualizando lista por ID...");
-                    System.out.print("Digite o ID da lista: ");
-                    int listIdToView = sc.nextInt();
-                    sc.nextLine(); // Consome o buffer
-                    System.out.println("Lista exibida com sucesso!");
-                    // Chamar o método para exibir a lista pelo ID.
+                    System.out.println("\nVisualizando suas listas...");
+                    System.out.println("Digite o id da tarefa que deseja visualizar");
+                    int listTarefa = sc.nextInt();
+
+                    Recuperar recuperarTeste = new Recuperar();
+                    recuperarTeste.RecuperarPorIdTarefa(listTarefa);
                     break;
                 case 8:
-                    System.out.println("\nVisualizando tarefa por descrição...");
-                    System.out.print("Digite a descrição da tarefa: ");
-                    String taskDescriptionToSearch = sc.nextLine();
-                    System.out.println("Tarefa exibida com sucesso!");
-                    // Chamar o método para buscar tarefa pela descrição.
+                    
                     break;
                 case 9:
-                    System.out.println("\nVisualizando lista por descrição...");
-                    System.out.print("Digite a descrição da lista: ");
-                    String listDescriptionToSearch = sc.nextLine();
-                    System.out.println("Lista exibida com sucesso!");
-                    // Chamar o método para buscar lista pela descrição.
+                    
+                    
                     break;
                 case 10:
-                    System.out.println("\nExcluindo uma lista...");
-                    System.out.print("Digite o ID da lista que deseja excluir: ");
-                    int listIdToDelete = sc.nextInt();
-                    sc.nextLine(); // Consome o buffer
-                    Delete del = new Delete(listIdToDelete);
-                    del.Delete();
-                    System.out.println("Lista excluída com sucesso!");
+                      System.out.println("Digite o ID da lista que voce deseja excluir");
+                      int listId = sc.nextInt();
+                      Delete dell = new Delete();
+                      dell.DeleteList(listId);
                     break;
                 case 11:
-                    System.out.println("\nExcluindo uma tarefa...");
-                    System.out.print("Digite o ID da tarefa que deseja excluir: ");
-                    int taskIdToDelete = sc.nextInt();
-                    sc.nextLine(); // Consome o buffer
-                    // Chamar o método para excluir a tarefa pelo ID.
-                    System.out.println("Tarefa excluída com sucesso!");
+                      System.out.println("Digite o ID da tarefa que voce deseja excluir");
+                      int idTarefa = sc.nextInt();
+                      Delete dellTarefa = new Delete();
+                      dellTarefa.DeleteTarefa(idTarefa);
                     break;
                 case 0:
                     System.out.println("\nSaindo do To-Do List App. Até logo!");
+                    Add add = new Add();
+                     Connection conn = null;
+                    PreparedStatement pst = null;
+                     ResultSet rs = null;
+                    add.fecharRecursos(rs,pst,conn);
                     sc.close();  
                     return; 
                 default:

@@ -11,15 +11,17 @@ public class Coneccao {
         private static Connection conn = null;
 
         public static Connection getConnection() throws FileNotFoundException, IOException{
-                if(conn == null){
+                    Connection conn = null;
                     Properties props = load();
                     String url = props.getProperty("dburl");
+                    
+                    
                   try {
                     conn = DriverManager.getConnection(url, props);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                }
+                
 
             return conn;
         }
