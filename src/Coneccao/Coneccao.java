@@ -1,5 +1,4 @@
 package Coneccao;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,7 +11,6 @@ public class Coneccao {
         private static Connection conn = null;
 
         public static Connection getConnection() throws FileNotFoundException, IOException{
-        
                 if(conn == null){
                     Properties props = load();
                     String url = props.getProperty("dburl");

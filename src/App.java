@@ -1,15 +1,13 @@
-import java.sql.Connection;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
-import Coneccao.Coneccao;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws FileNotFoundException, IOException  {
         Scanner sc = new Scanner(System.in);
         int opcao;
-
-        Connection conn =   Coneccao.getConnection();
-        System.out.println(conn);
+        
 
         // Saudação de boas-vindas
         System.out.println("===========================================");
