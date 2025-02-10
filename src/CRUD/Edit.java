@@ -10,7 +10,7 @@ import Coneccao.Coneccao;
 
 public class Edit {
 
-    public static void main(String[] args) throws FileNotFoundException, IOException { // Método para executar o código
+    public static void Ed() throws FileNotFoundException, IOException { // Método para executar o código
         Connection conn = null;
         PreparedStatement pst = null; 
         
