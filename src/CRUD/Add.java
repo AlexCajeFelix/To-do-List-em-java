@@ -14,15 +14,21 @@ import Coneccao.Coneccao;
 
 public class Add {
 
-    private String teste;
+    private String nome;
+    private String descricao;
+
 
   
-    public Add(String teste) {
-        this.teste = teste;
+    public Add() {
+    }
+
+    public Add(String nome,String descricao) {
+        this.nome = nome;
+        this.descricao = descricao;
     }
 
     // Método para adicionar uma tarefa no banco de dados
-    public void addTask() throws FileNotFoundException, IOException {
+    public void addTask(String nome, String descricao) throws FileNotFoundException, IOException {
         Connection coon2 = null;
         PreparedStatement pst = null;
 
@@ -35,8 +41,8 @@ public class Add {
             );
 
             // Passando os valores para o SQL
-            pst.setString(1, teste);
-            pst.setString(2, "Alex Bonitão lindão");
+            pst.setString(1, nome);
+            pst.setString(2, descricao);
             pst.setDate(3, Date.valueOf(LocalDate.now()));
 
             int rows = pst.executeUpdate();
@@ -70,10 +76,8 @@ public class Add {
 
     // Getter e Setter para o campo 'teste'
     public String getTeste() {
-        return teste;
+        return nome;
     }
 
-    public void setTeste(String teste) {
-        this.teste = teste;
-    }
+    
 }
