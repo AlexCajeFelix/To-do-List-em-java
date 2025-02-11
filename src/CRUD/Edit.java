@@ -10,12 +10,14 @@ import Coneccao.Coneccao;
 
 public class Edit {
 
-    private String teste;
+    private int id;
+    private String name;
     
    
 
-    public Edit(String teste) {
-        this.teste = teste;
+    public Edit(int id,String name) {
+        this.id = id;
+        this.name = name;
     }
 
 
@@ -26,15 +28,15 @@ public class Edit {
 
 
 
-    public void EditList() throws FileNotFoundException, IOException { // Método para executar o código
+    public void EditList(int id,String name ) throws FileNotFoundException, IOException { // Método para executar o código
         Connection conn = null;
         PreparedStatement pst = null; 
         
         try {
             conn = Coneccao.getConnection();
             pst = conn.prepareStatement("UPDATE lista_tarefa SET name = ? WHERE list_id = ?");
-            pst.setString(1, teste);
-            pst.setInt(2, 4013);
+            pst.setString(1, name);
+            pst.setInt(2, id);
 
             int linhasAfetadas = pst.executeUpdate();
 
@@ -56,15 +58,15 @@ public class Edit {
         }
     }
 
-    public void EditTarefa() throws FileNotFoundException, IOException { // Método para executar o código
+    public void EditTarefa(int id,String name ) throws FileNotFoundException, IOException { // Método para executar o código
         Connection conn = null;
         PreparedStatement pst = null; 
         
         try {
             conn = Coneccao.getConnection();
             pst = conn.prepareStatement("UPDATE tarefa SET name = ? WHERE list_id = ?");
-            pst.setString(1, teste);
-            pst.setInt(2, 4013);
+            pst.setString(1, name);
+            pst.setInt(2, id);
 
             int linhasAfetadas = pst.executeUpdate();
 
@@ -86,15 +88,4 @@ public class Edit {
         }
     }
 
-
-
-    public String getTeste() {
-        return teste;
-    }
-
-
-
-    public void setTeste(String teste) {
-        this.teste = teste;
-    }
 }
